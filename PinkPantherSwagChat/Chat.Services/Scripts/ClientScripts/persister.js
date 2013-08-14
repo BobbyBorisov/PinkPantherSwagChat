@@ -36,8 +36,8 @@
         login: function (user, success, error) {
             var url = this.rootUrl + "login";
             var userData = {
-                Username: user.username,
-                PasswordHash: CryptoJS.SHA1(user.username + user.password).toString()
+                Username: user.Username,
+                PasswordHash: CryptoJS.SHA1(user.Username + user.PasswordHash).toString()
             };
 
             httpRequester.postJSON(url, userData,
@@ -49,8 +49,8 @@
         register: function (user, success, error) {
             var url = this.rootUrl + "register";
             var userData = {
-                Username: user.username,
-                PasswordHash: CryptoJS.SHA1(user.username + user.password).toString()
+                Username: user.Username,
+                PasswordHash: CryptoJS.SHA1(user.Username + user.PasswordHash).toString()
             };
             httpRequester.postJSON(url, userData,
 				function (data) {

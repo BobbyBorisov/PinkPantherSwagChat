@@ -7,7 +7,7 @@
         },
 
         loadUI: function (selector) {
-            // Uncomment when persisters are working
+             //Uncomment when persisters are working
             //if (this.persister.isUserLoggedIn()) {
             //    this.loadChatUI(selector);
             //}
@@ -15,10 +15,10 @@
             //    this.loadLoginFormUI(selector);
             //}
 
-            // debug
-            this.loadChatUI(selector);
+            //// debug
+            //this.loadChatUI(selector);
 
-            //this.loadLoginFormUI(selector);
+            ////this.loadLoginFormUI(selector);
         },
 
         loadLoginFormUI: function (selector) {
@@ -34,6 +34,17 @@
             this.persister.users.register(user,function () {
                 console.log("Success");
             });
+        },
+        loginSingleUser: function () {
+            var user = {
+                Username: "Pepa",
+                PasswordHash: "pepa"
+            }
+
+            this.persister.users.login(user, function () {
+                console.log("Success");
+            });
+
         },
 
         loadChatUI: function (selector) {
@@ -84,7 +95,7 @@
 $(function () {
     var controller = controllers.get();
     //controller.loadUI("#content");
-    controller.registerSingleUser();
+    //controller.registerSingleUser();
     controller.getAllUsers();
 
 });
