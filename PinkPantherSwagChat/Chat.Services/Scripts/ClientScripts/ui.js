@@ -13,8 +13,6 @@
 					'<div id="register-form" style="display: none">' +
 						'<label for="tb-register-username">Username: </label>' +
 						'<input type="text" id="tb-register-username"><br />' +
-						'<label for="tb-register-nickname">Nickname: </label>' +
-						'<input type="text" id="tb-register-nickname"><br />' +
 						'<label for="tb-register-password">Password: </label>' +
 						'<input type="text" id="tb-register-password"><br />' +
 						'<button id="btn-register" class="button">Register</button>' +
