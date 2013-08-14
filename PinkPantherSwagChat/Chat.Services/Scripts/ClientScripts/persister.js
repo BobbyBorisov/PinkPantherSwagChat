@@ -70,6 +70,7 @@
             var url = this.rootUrl;
 
             httpRequester.getJSON(url, function (data) {
+                clearUserData();
                 success(data);
             }, error)
         }
