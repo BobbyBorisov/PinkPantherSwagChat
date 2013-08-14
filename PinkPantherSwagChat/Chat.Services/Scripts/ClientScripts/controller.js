@@ -15,10 +15,11 @@
             //    this.loadLoginFormUI(selector);
             //}
 
-            //// debug
+            // debug
             //this.loadChatUI(selector);
+            this.loadLoginFormUI(selector);
 
-            ////this.loadLoginFormUI(selector);
+            this.attachUIEventHandlers(selector);
         },
 
         loadLoginFormUI: function (selector) {
@@ -47,39 +48,21 @@
 
         },
 
-        startConversation: function () {
-            var conversation = {
-                FirstUser: "Pepa",
-                SecondUser: "Azis"
-            }
-
-            this.persister.conversation.start(conversation, function (data) {
-                console.log(data);
-            });
-        },
-
-        loadChatUI: function (selector) {
-            var allUsers = this.getAllUsers();
-            var chatUIHtml = ui.buildChatUI("someName", allUsers);
+        loadUsersList: function (selector, users) {
+            var chatUIHtml = ui.buildChatUI("someName", users);
             $(selector).html(chatUIHtml);
         },
 
-        getAllUsers: function () {
-            var allUsers = [];
+        loadChatUI: function (selector) {
+            var self = this;
             
             this.persister.users.getAll(function (users) {
 
-                for (var i = 0; i < users.length; i++) {
-                    allUsers[i] = users[i];
-                }
+                self.loadUsersList(selector, users);
 
             }, function (err) {
                 console.log(err);
             });
-
-            console.log(allUsers);
-
-            return allUsers;
         }
         ,
         getAllUsers: function () {
@@ -93,6 +76,54 @@
                 
             });
             
+        },
+
+        attachUIEventHandlers: function (selector) {
+            var wrapper = $(selector);
+            var self = this;
+
+            // switch login and register forms
+            wrapper.on("click", "#btn-show-login", function () {
+                wrapper.find(".button.selected").removeClass("selected");
+                $(this).addClass("selected");
+                wrapper.find("#login-form").show();
+                wrapper.find("#register-form").hide();
+            });
+            wrapper.on("click", "#btn-show-register", function () {
+                wrapper.find(".button.selected").removeClass("selected");
+                $(this).addClass("selected");
+                wrapper.find("#register-form").show();
+                wrapper.find("#login-form").hide();
+            });
+
+            // register new user
+            wrapper.on("click", "#btn-register", function () {
+                var user = {
+                    Username: $(selector).find("#tb-register-username").val(),
+                    PasswordHash: $(selector + " #tb-register-password").val()
+                }
+                self.persister.users.register(user, function () {
+                    self.loadChatUI(selector);
+                }, function (err) {
+                    wrapper.find("#error-messages").text(err.responseJSON.Message);
+                });
+                return false;
+            });
+
+            // login existing user
+            wrapper.on("click", "#btn-login", function () {
+                var user = {
+                    Username: $(selector + " #tb-login-username").val(),
+                    PasswordHash: $(selector + " #tb-login-password").val()
+                }
+
+                self.persister.users.login(user, function () {
+                    self.loadChatUI(selector);
+                }, function (err) {
+                    wrapper.find("#error-messages").text(err.responseJSON.Message);
+                });
+                return false;
+            });
         }
     });
 
@@ -105,10 +136,9 @@
 
 $(function () {
     var controller = controllers.get();
-    //controller.loadUI("#content");
+    controller.loadUI("#content");
     //controller.registerSingleUser();
     controller.loginSingleUser();
-    controller.s
     controller.getAllUsers();
 
 });
