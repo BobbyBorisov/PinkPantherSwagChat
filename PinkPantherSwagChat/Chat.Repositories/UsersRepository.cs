@@ -27,5 +27,10 @@ namespace Chat.Repositories
 
             return false;
         }
+
+        public User GetByUsername(string username)
+        {
+            return chatContext.Users.FirstOrDefault(u => u.Username == username);
+        }
     }
 }
