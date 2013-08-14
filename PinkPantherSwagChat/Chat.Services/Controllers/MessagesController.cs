@@ -1,0 +1,42 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using Chat.DataLayer;
+using Chat.Models;
+using Chat.Repositories;
+
+namespace Chat.Services.Controllers
+{
+    public class MessagesController : ApiController
+    {
+        private IRepository<Message> messagesRepository;
+
+        public MessagesController()
+        {
+            var context = new ChatDatabaseContext();
+            messagesRepository = new EfRepository<Message>(context);
+        }
+
+        [HttpGet]
+        public IQueryable<Message> Get()
+        {
+            return messagesRepository.All();
+        }
+
+        [HttpGet]
+        public Message Get(int id)
+        {
+            return messagesRepository.Get(id);
+        }
+
+        [HttpPost]
+        [ActionName("send")]
+        public void Post([FromBody]Message value)
+        {
+            messagesRepository.Add(value);
+        }
+    }
+}

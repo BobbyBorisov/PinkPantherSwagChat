@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Web.Http;
 using Chat.DataLayer;
 using Chat.Models;
@@ -52,6 +53,14 @@ namespace Chat.Services.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.Unauthorized, "Invalid username or password");
             }
+        }
+
+        [HttpPost]
+        [ActionName("byusername")]
+        public User GetByUsername([FromBody]User userData)
+        {
+            var user = usersRepository.GetByUsername(userData.Username);
+            return user;
         }
     }
 }
