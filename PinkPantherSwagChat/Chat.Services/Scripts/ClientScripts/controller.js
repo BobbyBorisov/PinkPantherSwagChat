@@ -42,7 +42,7 @@
             }
 
             this.persister.users.login(user, function () {
-                console.log("Success");
+                console.log("Success login");
             });
 
         },
@@ -96,6 +96,7 @@ $(function () {
     var controller = controllers.get();
     //controller.loadUI("#content");
     //controller.registerSingleUser();
+    controller.loginSingleUser();
     controller.getAllUsers();
 
 });
