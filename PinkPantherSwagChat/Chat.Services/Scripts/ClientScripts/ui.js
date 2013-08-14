@@ -27,14 +27,15 @@
         return html;
     }
 
-    function buildChatUI (partnerName) {
+    function buildChatUI (partnerName, allUsers) {
         var html =
-            '<div id="usersList">' +
-            '<p>Pesho</p>' +
-            '<p>Gosho</p>' +
-            '<p>Penka</p>' +
-            '<p>Ginka</p>' +
-        '</div>' +
+            '<div id="usersList">';
+
+        for (var i = 0; i < allUsers.length; i++) {
+            html += '<p>' + allUsers[i].Username + '</p>';
+        }
+            
+        html += '</div>' +
         '<div id="partnerName">Chatting with' + partnerName + '</div>' +
         '<div id="chatWindow">' +
             '<p class="sent">Zdrasti</p>' +
