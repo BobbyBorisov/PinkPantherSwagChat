@@ -3,6 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Services", "Chat.Services\Chat.Services.csproj", "{2E47E177-2C27-42FC-9098-C29FE1F3C150}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Models", "Chat.Models\Chat.Models.csproj", "{065FF63F-CC6A-4C74-879D-8F893F0B57D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.DataLayer", "Chat.DataLayer\Chat.DataLayer.csproj", "{C3FA7B71-188F-4677-B10F-874B86B96369}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Repositories", "Chat.Repositories\Chat.Repositories.csproj", "{C74E6D5F-C2B5-40FF-81D8-57085AF768DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +19,18 @@ Global
 		{2E47E177-2C27-42FC-9098-C29FE1F3C150}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E47E177-2C27-42FC-9098-C29FE1F3C150}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E47E177-2C27-42FC-9098-C29FE1F3C150}.Release|Any CPU.Build.0 = Release|Any CPU
+		{065FF63F-CC6A-4C74-879D-8F893F0B57D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{065FF63F-CC6A-4C74-879D-8F893F0B57D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{065FF63F-CC6A-4C74-879D-8F893F0B57D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{065FF63F-CC6A-4C74-879D-8F893F0B57D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3FA7B71-188F-4677-B10F-874B86B96369}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3FA7B71-188F-4677-B10F-874B86B96369}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3FA7B71-188F-4677-B10F-874B86B96369}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3FA7B71-188F-4677-B10F-874B86B96369}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C74E6D5F-C2B5-40FF-81D8-57085AF768DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C74E6D5F-C2B5-40FF-81D8-57085AF768DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C74E6D5F-C2B5-40FF-81D8-57085AF768DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C74E6D5F-C2B5-40FF-81D8-57085AF768DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

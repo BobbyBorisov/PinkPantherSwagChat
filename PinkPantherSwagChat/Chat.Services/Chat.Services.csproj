@@ -123,7 +123,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -235,6 +235,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Chat.DataLayer\Chat.DataLayer.csproj">
+      <Project>{c3fa7b71-188f-4677-b10f-874b86b96369}</Project>
+      <Name>Chat.DataLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Chat.Models\Chat.Models.csproj">
+      <Project>{065ff63f-cc6a-4c74-879d-8f893f0b57d5}</Project>
+      <Name>Chat.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Chat.Repositories\Chat.Repositories.csproj">
+      <Project>{c74e6d5f-c2b5-40ff-81d8-57085af768de}</Project>
+      <Name>Chat.Repositories</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
