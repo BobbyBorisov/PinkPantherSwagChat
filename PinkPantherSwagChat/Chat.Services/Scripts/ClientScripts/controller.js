@@ -47,6 +47,17 @@
 
         },
 
+        startConversation: function () {
+            var conversation = {
+                FirstUser: "Pepa",
+                SecondUser: "Azis"
+            }
+
+            this.persister.conversation.start(conversation, function (data) {
+                console.log(data);
+            });
+        },
+
         loadChatUI: function (selector) {
             var allUsers = this.getAllUsers();
             var chatUIHtml = ui.buildChatUI("someName", allUsers);
@@ -97,6 +108,7 @@ $(function () {
     //controller.loadUI("#content");
     //controller.registerSingleUser();
     controller.loginSingleUser();
+    controller.s
     controller.getAllUsers();
 
 });

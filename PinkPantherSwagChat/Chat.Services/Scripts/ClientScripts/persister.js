@@ -2,10 +2,9 @@
     var nickname = localStorage.getItem("nickname");
     var sessionKey = localStorage.getItem("sessionKey");
     function saveUserData(userData) {
-        localStorage.setItem("nickname", userData.nickname);
-        localStorage.setItem("sessionKey", userData.sessionKey);
-        nickname = userData.nickname;
-        sessionKey = userData.sessionKey;
+        localStorage.setItem("Username", userData.Username);
+        localStorage.setItem("PasswordHash", userData.PasswordHash);
+        
     }
     function clearUserData() {
         localStorage.removeItem("nickname");
@@ -18,6 +17,7 @@
         init: function (rootUrl) {
             this.rootUrl = rootUrl;
             this.users = new UserPersister(this.rootUrl);
+            this.conversation = new ConversationPersister(this.rootUrl);
             this.message = new MessagesPersister(this.rootUrl);
         },
         isUserLoggedIn: function () {
@@ -78,31 +78,18 @@
         init: function (url) {
             this.rootUrl = url + "conversations/";
         },
-        create: function (conversation, success, error) {
+        start: function (conversation, success, error) {
             var conversationData = {
-                title: conversation.title,
-                number: conversation.number
+                FirstUser: conversation.FirstUser,
+                SecondUser: conversation.SecondUser
             };
-            if (conversation.password) {
-                conversationData.password = CryptoJS.SHA1(conversation.password).toString();
-            }
-            var url = this.rootUrl + "create/" + sessionKey;
-            httpRequester.postJSON(url, conversationData, success, error);
-        },
-        get: function (game, success, error) {
-            var gameData = {
-                gameId: game.gameId,
-                number: game.number
-            };
-            if (game.password) {
-                gameData.password = CryptoJS.SHA1(game.password).toString();
-            }
-            var url = this.rootUrl + "join/" + sessionKey;
-            httpRequester.postJSON(url, gameData, success, error);
-        },
-        start: function (gameId, success, error) {
-            var url = this.rootUrl + gameId + "/start/" + sessionKey;
-            httpRequester.getJSON(url, success, error)
+
+            var url = this.rootUrl + "/start";
+
+            httpRequester.postJSON(url, conversationData,
+				function (data) {
+				    success(data);
+				}, error);
         }
     });
     var MessagesPersister = Class.create({
