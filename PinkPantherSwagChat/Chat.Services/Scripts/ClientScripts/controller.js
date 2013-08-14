@@ -78,6 +78,17 @@
             
         },
 
+        startConversation: function () {
+            var conversation = {
+                FirstUser: { Username:"Azdis"},
+                SecondUser: { Username:"Pepa"}
+            }
+
+            this.persister.conversation.start(conversation, function (data) {
+                console.log(data);
+            });
+        },
+
         attachUIEventHandlers: function (selector) {
             var wrapper = $(selector);
             var self = this;
@@ -138,7 +149,8 @@ $(function () {
     var controller = controllers.get();
     controller.loadUI("#content");
     //controller.registerSingleUser();
-    controller.loginSingleUser();
+    //controller.loginSingleUser();
+    controller.startConversation();
     controller.getAllUsers();
 
 });
