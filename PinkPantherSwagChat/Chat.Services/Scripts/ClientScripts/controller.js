@@ -1,6 +1,9 @@
 ﻿var controllers = (function () {
+    var rootUrl = "http://localhost:2761/api/";
+
     var Controller = Class.create({
         init: function () {
+            this.persister = persisters.get(rootUrl);
         },
 
         loadUI: function (selector) {
@@ -24,8 +27,27 @@
         },
 
         loadChatUI: function (selector) {
-            var chatUIHtml = ui.buildChatUI();
+            var allUsers = this.getAllUsers();
+            var chatUIHtml = ui.buildChatUI("someName", allUsers);
             $(selector).html(chatUIHtml);
+        },
+
+        getAllUsers: function () {
+            var allUsers = [];
+            
+            this.persister.users.getAll(function (users) {
+
+                for (var i = 0; i < users.length; i++) {
+                    allUsers[i] = users[i];
+                }
+
+            }, function (err) {
+                console.log(err);
+            });
+
+            console.log(allUsers);
+
+            return allUsers;
         }
     });
 
