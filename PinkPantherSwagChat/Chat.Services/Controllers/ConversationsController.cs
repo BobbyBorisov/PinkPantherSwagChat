@@ -50,6 +50,7 @@ namespace Chat.Services.Controllers
                 return GetByUsers(users);
             }
 
+            return conversation;
         }
 
        
