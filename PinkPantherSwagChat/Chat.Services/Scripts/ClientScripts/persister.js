@@ -36,8 +36,8 @@
         login: function (user, success, error) {
             var url = this.rootUrl + "login";
             var userData = {
-                username: user.username,
-                authCode: CryptoJS.SHA1(user.username + user.password).toString()
+                Username: user.username,
+                PasswordHash: CryptoJS.SHA1(user.username + user.password).toString()
             };
 
             httpRequester.postJSON(url, userData,
@@ -49,9 +49,8 @@
         register: function (user, success, error) {
             var url = this.rootUrl + "register";
             var userData = {
-                username: user.username,
-                nickname: user.nickname,
-                authCode: CryptoJS.SHA1(user.username + user.password).toString()
+                Username: user.username,
+                PasswordHash: CryptoJS.SHA1(user.username + user.password).toString()
             };
             httpRequester.postJSON(url, userData,
 				function (data) {
@@ -90,7 +89,7 @@
             var url = this.rootUrl + "create/" + sessionKey;
             httpRequester.postJSON(url, conversationData, success, error);
         },
-        join: function (game, success, error) {
+        get: function (game, success, error) {
             var gameData = {
                 gameId: game.gameId,
                 number: game.number
@@ -104,18 +103,6 @@
         start: function (gameId, success, error) {
             var url = this.rootUrl + gameId + "/start/" + sessionKey;
             httpRequester.getJSON(url, success, error)
-        },
-        myActive: function (success, error) {
-            var url = this.rootUrl + "my-active/" + sessionKey;
-            httpRequester.getJSON(url, success, error);
-        },
-        open: function (success, error) {
-            var url = this.rootUrl + "open/" + sessionKey;
-            httpRequester.getJSON(url, success, error);
-        },
-        state: function (gameId, success, error) {
-            var url = this.rootUrl + gameId + "/state/" + sessionKey;
-            httpRequester.getJSON(url, success, error);
         }
     });
     var MessagesPersister = Class.create({
@@ -128,6 +115,17 @@
         },
         all: function (success, error) {
             var url = this.rootUrl + "all/" + sessionKey;
+            httpRequester.getJSON(url, success, error);
+        },
+        send: function (message, success, error) {
+
+            var messageInfo = {
+                sender: message.sender,
+                receiver: message.receiver,
+                content: message.content
+            };
+
+            var url = this.rootUrl + "send/";
             httpRequester.getJSON(url, success, error);
         }
     });
