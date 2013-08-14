@@ -57,7 +57,7 @@
 				function (data) {
 				    saveUserData(data);
 				    success(data);
-				}, error);
+				}, error);  
         },
         //logout: function (success, error) {
         //    var url = this.rootUrl + "logout/" + sessionKey;
