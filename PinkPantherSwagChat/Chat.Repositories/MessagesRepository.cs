@@ -27,5 +27,19 @@ namespace Chat.Repositories
             conversation.Messages.Add(item);
             chatContext.SaveChanges();
         }
+
+        public IEnumerable<Message> GetByConversation(int id)
+        {
+            var messages = chatContext.Conversations.Find(id).Messages
+                .Select(m => new Message()
+                                 {
+                                     Content = m.Content,
+                                     Date = m.Date,
+                                     Id = m.Id,
+                                     Sender = m.Sender
+                                 });
+
+            return messages;
+        }
     }
 }

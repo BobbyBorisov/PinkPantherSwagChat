@@ -179,7 +179,14 @@
                 message.Sender = user;
 
                 self.persister.message.send(message, function () {
-                    console.log("Sent!");
+                    self.persister.message.getByConversation(currentConversation.Id, function(messages) {
+                        var chatHtml = ui.buildConversationWindow(messages, partnerName);
+                        console.log(chatHtml);
+                        console.log(messages);
+                        // append new conversation
+                        // TODO : clear the previous
+                        $(selector).append(chatHtml);
+                    });
                 });
                 //console.log(currentConversation);
             });

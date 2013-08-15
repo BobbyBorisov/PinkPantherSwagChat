@@ -22,16 +22,6 @@ namespace Chat.Services.Controllers
             this.usersRepository = new UsersRepository(context);
         }
 
-        public IQueryable<Conversation> Get()
-        {
-            return conversationsRepository.All();
-        }
-
-        public Conversation Get(int id)
-        {
-            return conversationsRepository.Get(id);
-        }
-
         [HttpPost]
         [ActionName("start")]
         public Conversation Start([FromBody]Conversation conversationData)

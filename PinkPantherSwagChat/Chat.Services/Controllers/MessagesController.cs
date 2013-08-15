@@ -40,5 +40,12 @@ namespace Chat.Services.Controllers
             value.Conversation.Messages = new Collection<Message>();
             messagesRepository.Add(value);
         }
+
+        [HttpGet]
+        [ActionName("byconversation")]
+        public IEnumerable<Message> GetMessagesByConversations(int id)
+        {
+            return messagesRepository.GetByConversation(id);
+        }
     }
 }

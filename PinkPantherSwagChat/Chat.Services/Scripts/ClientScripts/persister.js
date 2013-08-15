@@ -72,9 +72,9 @@
         getAll: function (success, error) {
             var url = this.rootUrl;
 
-            httpRequester.getJSON(url, function (data) {
+            httpRequester.getJSON(url, function(data) {
                 success(data);
-            }, error)
+            }, error);
         }
     });
     var ConversationPersister = Class.create({
@@ -99,13 +99,11 @@
         init: function (url) {
             this.rootUrl = url + "messages/";
         },
-        unread: function (success, error) {
-            var url = this.rootUrl + "unread/" + sessionKey;
-            httpRequester.getJSON(url, success, error);
-        },
-        all: function (success, error) {
-            var url = this.rootUrl + "all/" + sessionKey;
-            httpRequester.getJSON(url, success, error);
+        getByConversation: function (id, success, error) {
+            var url = this.rootUrl + "byconversation/" + id.toString();
+            httpRequester.getJSON(url, function (data) {
+                success(data);
+            }, error);
         },
         send: function (message, success, error) {
 
