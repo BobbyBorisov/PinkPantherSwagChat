@@ -115,7 +115,7 @@
             });
         },
 
-        startConversation: function () {
+        startConversation: function (success) {
             var self = this;
             var conversation = {
                 FirstUser: { Username: localStorage.getItem("Username") },
@@ -136,6 +136,7 @@
 
                 // save conversation
                 currentConversation = data;
+                success();
             });
         },
 
@@ -180,16 +181,22 @@
 
             // register new user
             wrapper.on("click", "#btn-register", function () {
-                var user = {
-                    Username: $(self.selector).find("#tb-register-username").val(),
-                    PasswordHash: $(self.selector + " #tb-register-password").val()
-                }
-                self.persister.users.register(user, function () {
+                // upload profile picture
+                ImageUploader.uploadImage("file-upload", function (url) {
+                    var user = {
+                        Username: $(self.selector).find("#tb-register-username").val(),
+                        PasswordHash: $(self.selector + " #tb-register-password").val(),
+                        ProfilePictureUrl: url
+                    }
 
-                }, function (err) {
-                    wrapper.find("#error-messages").text(err.responseJSON.Message);
+                    self.persister.users.register(user, function () {
+
+                    }, function (err) {
+                        wrapper.find("#error-messages").text(err.responseJSON.Message);
+                    });
+                    return false;
                 });
-                return false;
+                
             });
 
             // login existing user
@@ -212,12 +219,34 @@
                 // get partner name
                 partnerName = this.innerText;
                 wrapper.find("#partnerName").html('Chatting with ' + partnerName);
-
+                
                 // delete last conversation
                 $("#chatWindow").remove();
 
                 // start new conversation
-                self.startConversation();
+                self.startConversation(function () {
+                    console.log(currentConversation);
+                    var partner = (currentConversation.FirstUser.Username == partnerName) ? currentConversation.FirstUser : currentConversation.SecondUser
+                    var partnerPictureUrl = partner.ProfilePictureUrl;
+                    
+                    if (partnerPictureUrl != null) {
+                        $("#partnerPicture").attr("src", partnerPictureUrl);
+                    }
+                    else {
+                        $("#partnerPicture").attr("src", "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png");
+                    }
+
+                    var currentUserPictureUrl = localStorage.getItem("ProfilePictureUrl");
+
+                    if (currentUserPictureUrl != null) {
+                        $("#yourPicture").attr("src", currentUserPictureUrl);
+                    }
+                    else {
+                        $("#yourPicture").attr("src", "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png");
+                    }
+                });
+
+                
             });
 
             // send new message
