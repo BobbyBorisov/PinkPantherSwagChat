@@ -34,22 +34,13 @@
         }
             
         html += '</div>' +
-        '<div id="partnerName">Chatting with' + partnerName + '</div>' +
-        '<div id="chatWindow">' +
-            '<p class="sent">Zdrasti</p>' +
-            '<p class="recieved">Kvo stava</p>' +
-            '<p class="sent">Dobre e.</p>' +
-            '<div id="textForm">' +
-                '<input id="textInput" type="text" placeholder="type text here" />' +
-                '<input type="submit" id="sendButton", value="Send" />' +
-            '</div>' +
-        '</div>';
-
+        '<div id="partnerName">Chatting with' + partnerName + '</div>';
+        
         return html;
     }
 
     function buildConversationWindow(messages, partnerUsername) {
-        var html = "";
+        var html = '<div id="chatWindow">';
 
         for (var i = 0; i < messages.length; i++) {
             html += '<p>' + messages[i].Date + '</p>';
@@ -61,6 +52,8 @@
                '<input type="submit" id="sendButton", value="Send" />' +
            '</div>' +
        '</div>';
+
+        return html;
     }
 
     return {

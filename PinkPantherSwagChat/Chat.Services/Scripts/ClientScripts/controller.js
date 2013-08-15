@@ -95,7 +95,10 @@
                 var messages = data.Messages;
 
                 var chatHtml = ui.buildConversationWindow(messages, partnerName);
-                $(selector).html(chatHtml);
+                console.log(chatHtml);
+                
+                // append new conversation
+                $(selector).append(chatHtml);
             });
         },
 
@@ -151,6 +154,9 @@
                 // get partner name
                 partnerName = this.innerText;
                 wrapper.find("#partnerName").html('Chatting with ' + partnerName);
+
+                // delete last conversation
+                $("#chatWindow").remove();
 
                 // start new conversation
                 self.startConversation(selector);
