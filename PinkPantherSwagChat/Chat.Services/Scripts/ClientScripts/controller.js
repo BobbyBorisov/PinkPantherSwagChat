@@ -289,6 +289,10 @@
                     else {
                         $("#yourPicture").attr("src", "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png");
                     }
+
+                    // scroll to bottom
+                    var objDiv = document.getElementById("msgContent");
+                    objDiv.scrollTop = objDiv.scrollHeight;
                 });
 
                 
