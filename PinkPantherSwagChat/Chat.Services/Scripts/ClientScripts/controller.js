@@ -1,5 +1,5 @@
 ﻿var controllers = (function () {
-    var rootUrl = "http://localhost:2761/api/";
+    var rootUrl = "http://pinkpantherwebswagchat.apphb.com/api/";
     var partnerName;
     var currentConversation;
     var selector;
