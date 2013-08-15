@@ -40,6 +40,8 @@ h1 {
 
 #usersList {
     margin-right: 30px;
+    width: 80px;
+    overflow: scroll;
     clear: right;
 }
 
