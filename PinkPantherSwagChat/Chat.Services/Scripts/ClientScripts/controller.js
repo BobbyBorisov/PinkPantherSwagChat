@@ -113,6 +113,7 @@
                 callback: function (message) {
                     console.log(message);
                     self.updateConversation("#content");
+                    //not
                 }
             });
         },
@@ -124,6 +125,21 @@
                 callback: function (message) {
                     console.log(message);
                     self.loadChatUI();
+                }
+            });
+        },
+
+        subsribeOwnChannelForNotification: function(){
+            var self = this;
+            var username = localStorage.getItem("Username");
+
+            console.log(username);
+
+            this.pubnub.subscribe({
+                channel: username + "-channel",
+                callback: function (message) {
+                    console.log(message);
+                    $("#" + message).css("background-color", "yellow");
                 }
             });
         },
@@ -210,6 +226,9 @@
                             message: "new user registered"
 
                         });
+
+                        window.location.reload();
+                        //localStorage.clear();
                     }, function (err) {
                         wrapper.find("#error-messages").text(err.responseJSON.Message);
                     });
@@ -227,6 +246,8 @@
 
                 self.persister.users.login(user, function () {
                     self.loadChatUI();
+                    self.subsribeOwnChannelForNotification();
+
                 }, function (err) {
                     wrapper.find("#error-messages").text(err.responseJSON.Message);
                 });
@@ -238,7 +259,8 @@
                 // get partner name
                 partnerName = this.innerText;
                 wrapper.find("#partnerName").html('Chatting with ' + partnerName);
-                
+                $(this).css("background-color", "transparent");
+
                 // delete last conversation
                 $("#chatWindow").remove();
 
@@ -256,7 +278,7 @@
                     }
 
                     var currentUserPictureUrl = localStorage.getItem("ProfilePictureUrl");
-
+                    console.log(currentUserPictureUrl);
                     if (currentUserPictureUrl != null) {
                         $("#yourPicture").attr("src", currentUserPictureUrl);
                     }
@@ -290,6 +312,12 @@
                 self.pubnub.publish({
                     channel: channelName,
                     message: $("#textInput").val()
+
+                });
+
+                self.pubnub.publish({
+                    channel: partnerName+"-channel",
+                    message: localStorage.getItem("Username")
 
                 });
 

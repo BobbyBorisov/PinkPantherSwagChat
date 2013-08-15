@@ -33,13 +33,13 @@
 
         var html =
             '<div id="profilePanel">' +
-            'Welcome, <img src="" id="yourPicture" />' +
+            'Welcome '+localStorage.getItem("Username")+', <img src="" id="yourPicture" />' +
             '<a href=# id="logoutButton">Logout</a>' +
             '</div>' +
             '<div id="usersList">';
 
         for (var i = 0; i < allUsers.length; i++) {
-            html += '<a href=#><p>' + allUsers[i].Username + '</p></a>';
+            html += '<a href=#><p id="'+ allUsers[i].Username+'">' + allUsers[i].Username + '</p></a>';
         }
             
         html += '</div>' +
