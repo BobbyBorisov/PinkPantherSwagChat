@@ -80,7 +80,7 @@
 
         startConversation: function () {
             var conversation = {
-                FirstUser: { Username:"Azdis"},
+                FirstUser: { Username:"Azis"},
                 SecondUser: { Username:"Pepa"}
             }
 
@@ -147,10 +147,10 @@
 
 $(function () {
     var controller = controllers.get();
-    controller.loadUI("#content");
+    //controller.loadUI("#content");
     //controller.registerSingleUser();
     //controller.loginSingleUser();
     controller.startConversation();
-    controller.getAllUsers();
+    //controller.getAllUsers();
 
 });
