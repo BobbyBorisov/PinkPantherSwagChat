@@ -49,3 +49,7 @@
     overflow:scroll;
 }
 
+#profilePanel {
+    float: right;
+}
+

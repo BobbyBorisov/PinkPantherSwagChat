@@ -27,6 +27,9 @@
 
     function buildChatUI (partnerName, allUsers) {
         var html =
+            '<div id="profilePanel">' +
+            '<a href=# id="logoutButton">Logout</a>' +
+            '</div>' +
             '<div id="usersList">';
 
         for (var i = 0; i < allUsers.length; i++) {

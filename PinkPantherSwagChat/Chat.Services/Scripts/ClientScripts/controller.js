@@ -189,6 +189,7 @@
                 self.startConversation(selector);
             });
 
+            // send new message
             wrapper.on("click", "#sendButton", function () {
                 var message = {};
                 message.Date = new Date();
@@ -219,6 +220,11 @@
                     });
                 });
                 //console.log(currentConversation);
+            });
+
+            wrapper.on("click", "#logoutButton", function () {
+                localStorage.clear();
+                window.location.reload();
             });
         }
     });
