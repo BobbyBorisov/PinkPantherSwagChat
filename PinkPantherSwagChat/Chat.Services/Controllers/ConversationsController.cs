@@ -13,11 +13,13 @@ namespace Chat.Services.Controllers
     public class ConversationsController : ApiController
     {
         private ConversationsRepository conversationsRepository;
+        private UsersRepository usersRepository;
 
         public ConversationsController()
         {
             var context = new ChatDatabaseContext();
             this.conversationsRepository = new ConversationsRepository(context);
+            this.usersRepository = new UsersRepository(context);
         }
 
         public IQueryable<Conversation> Get()
@@ -43,8 +45,8 @@ namespace Chat.Services.Controllers
             {
                 conversationsRepository.Add(new Conversation()
                                                 {
-                                                    FirstUser = users[0],
-                                                    SecondUser = users[1]
+                                                    FirstUser = usersRepository.GetByUsername(users[0].Username),
+                                                    SecondUser = usersRepository.GetByUsername(users[1].Username)
                                                 });
 
                 return GetByUsers(users);
