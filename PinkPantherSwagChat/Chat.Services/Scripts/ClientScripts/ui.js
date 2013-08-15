@@ -42,6 +42,8 @@
     function buildConversationWindow(messages, partnerUsername) {
         var html = '<div id="chatWindow">';
 
+        console.log(messages);
+
         for (var i = 0; i < messages.length; i++) {
             html += '<p>' + messages[i].Date + '</p>';
             html += '<p>' + messages[i].Content + '</p>';

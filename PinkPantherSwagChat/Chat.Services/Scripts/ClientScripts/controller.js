@@ -1,6 +1,7 @@
 ﻿var controllers = (function () {
     var rootUrl = "http://localhost:2761/api/";
     var partnerName;
+    var currentConversation;
 
     var Controller = Class.create({
         init: function () {
@@ -99,6 +100,9 @@
                 
                 // append new conversation
                 $(selector).append(chatHtml);
+
+                // save conversation
+                currentConversation = data;
             });
         },
 
@@ -160,6 +164,23 @@
 
                 // start new conversation
                 self.startConversation(selector);
+            });
+
+            wrapper.on("click", "#sendButton", function () {
+                var message = {};
+                message.Date = new Date();
+                message.Content = $("#textInput").val();
+                message.Conversation = currentConversation;
+
+                var user = {}
+                user.Id = localStorage.getItem("UserId");
+
+                message.Sender = user;
+
+                self.persister.message.send(message, function () {
+                    console.log("Sent!");
+                });
+                //console.log(currentConversation);
             });
         }
     });
