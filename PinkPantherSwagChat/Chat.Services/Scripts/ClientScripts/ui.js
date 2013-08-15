@@ -15,6 +15,8 @@
 						'<input type="text" id="tb-register-username"><br />' +
 						'<label for="tb-register-password">Password: </label>' +
 						'<input type="password" id="tb-register-password"><br />' +
+                        '<label for="file-upload">Profile Picture</label>' +
+                        '<input type="file" id="file-upload" />' +
 						'<button id="btn-register" class="button">Register</button>' +
 					'</div>' +
 					'<a href="#" id="btn-show-login" class="button selected">Login</a> ' +
@@ -26,9 +28,12 @@
         return html;
     }
 
-    function buildChatUI (partnerName, allUsers) {
+    function buildChatUI(partnerName, allUsers) {
+        var partnerPictureUrl = "";
+
         var html =
             '<div id="profilePanel">' +
+            '<img src="" id="partnerPicture" />' +
             '<a href=# id="logoutButton">Logout</a>' +
             '</div>' +
             '<div id="usersList">';
@@ -38,7 +43,8 @@
         }
             
         html += '</div>' +
-        '<div id="partnerName">Chatting with' + partnerName + '</div>';
+        '<div id="partnerName">Chatting with' + partnerName + '</div>' +
+        '<img src="" id="yourPicture" />';
         
         return html;
     }

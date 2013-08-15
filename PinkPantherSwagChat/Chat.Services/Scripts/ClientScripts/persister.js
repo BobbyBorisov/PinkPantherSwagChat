@@ -5,6 +5,7 @@
         localStorage.setItem("Username", userData.Username);
         localStorage.setItem("PasswordHash", userData.PasswordHash);
         localStorage.setItem("UserId", userData.Id);
+        localStorage.setItem("ProfilePictureUrl", userData.ProfilePictureUrl);
 
         console.log(localStorage);
     }
@@ -12,6 +13,7 @@
         localStorage.removeItem("Username");
         localStorage.removeItem("PasswordHash");
         localStorage.removeItem("UserId", userData.Id);
+        localStorage.removeItem("ProfilePictureUrl", userData.ProfilePictureUrl);
 
         username = "";
         sessionKey = "";
@@ -54,7 +56,8 @@
             var url = this.rootUrl + "register";
             var userData = {
                 Username: user.Username,
-                PasswordHash: CryptoJS.SHA1(user.Username + user.PasswordHash).toString()
+                PasswordHash: CryptoJS.SHA1(user.Username + user.PasswordHash).toString(),
+                ProfilePictureUrl: user.ProfilePictureUrl
             };
             httpRequester.postJSON(url, userData,
 				function (data) {
