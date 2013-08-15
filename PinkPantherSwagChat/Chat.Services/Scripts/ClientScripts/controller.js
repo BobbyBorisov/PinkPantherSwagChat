@@ -1,5 +1,6 @@
 ﻿var controllers = (function () {
     var rootUrl = "http://pinkpantherwebswagchat.apphb.com/api/";
+    //var rootUrl = "http://localhost:2761/api/";
     var partnerName;
     var currentConversation;
     var selector;
@@ -123,8 +124,9 @@
             this.pubnub.subscribe({
                 channel: "New-Users",
                 callback: function (message) {
-                    console.log(message);
-                    //self.loadChatUI();
+                    if (self.persister.isUserLoggedIn()) {
+                        self.loadChatUI(self.selector);
+                    }
                 }
             });
         },
