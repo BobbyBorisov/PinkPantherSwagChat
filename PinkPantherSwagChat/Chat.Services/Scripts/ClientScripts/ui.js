@@ -33,7 +33,7 @@
 
         var html =
             '<div id="profilePanel">' +
-            '<img src="" id="partnerPicture" />' +
+            'Welcome, <img src="" id="yourPicture" />' +
             '<a href=# id="logoutButton">Logout</a>' +
             '</div>' +
             '<div id="usersList">';
@@ -44,7 +44,8 @@
             
         html += '</div>' +
         '<div id="partnerName">Chatting with' + partnerName + '</div>' +
-        '<img src="" id="yourPicture" />';
+        '<img src="" id="partnerPicture" />';
+        
         
         return html;
     }

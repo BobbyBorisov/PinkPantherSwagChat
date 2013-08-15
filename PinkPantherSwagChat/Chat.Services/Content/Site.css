@@ -109,9 +109,16 @@ box-shadow: inset 0px 0px 15px 1px rgba(30, 30, 30, 0.3);
     color: #e12c2c;
 }
 
-#partnerPicture, #yourPicture {
+#partnerPicture {
     width: 100px;
     height: 100px;
+    float: right;
+}
+
+#yourPicture {
+    width: 20px;
+    height: 20px;
+    margin-right: 3px;
 }
 
 
