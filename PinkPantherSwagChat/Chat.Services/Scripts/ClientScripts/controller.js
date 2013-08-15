@@ -89,14 +89,13 @@
                 SecondUser: { Username: partnerName }
             };
 
-            //console.log(conversation);
+            console.log(conversation);
 
             this.persister.conversation.start(conversation, function (data) {
                 var messages = data.Messages;
-                console.log(data);
 
                 var chatHtml = ui.buildConversationWindow(messages, partnerName);
-                //console.log(chatHtml);
+                console.log(chatHtml);
                 
                 // append new conversation
                 $(selector).append(chatHtml);
