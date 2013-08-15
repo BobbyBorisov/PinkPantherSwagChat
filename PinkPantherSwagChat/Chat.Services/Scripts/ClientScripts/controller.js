@@ -79,6 +79,10 @@
             
         },
 
+        createNotification: function (data) {
+
+        },
+
         startConversation: function (selector) {
             var conversation = {
                 FirstUser: { Username: localStorage.getItem("Username")},
