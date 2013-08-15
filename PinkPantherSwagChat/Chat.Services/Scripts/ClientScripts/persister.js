@@ -1,15 +1,16 @@
 ﻿var persisters = (function () {
-    var nickname = localStorage.getItem("nickname");
-    var sessionKey = localStorage.getItem("sessionKey");
+    var username = localStorage.getItem("Username");
+    var sessionKey = localStorage.getItem("PasswordHash");
     function saveUserData(userData) {
         localStorage.setItem("Username", userData.Username);
         localStorage.setItem("PasswordHash", userData.PasswordHash);
         
+        console.log(localStorage);
     }
     function clearUserData() {
-        localStorage.removeItem("nickname");
-        localStorage.removeItem("sessionKey");
-        nickname = "";
+        localStorage.removeItem("Username");
+        localStorage.removeItem("PasswordHash");
+        username = "";
         sessionKey = "";
     }
 
@@ -21,11 +22,11 @@
             this.message = new MessagesPersister(this.rootUrl);
         },
         isUserLoggedIn: function () {
-            var isLoggedIn = nickname != null && sessionKey != null;
+            var isLoggedIn = username != null && sessionKey != null;
             return isLoggedIn;
         },
-        nickname: function () {
-            return nickname;
+        username: function () {
+            return username;
         }
     });
     var UserPersister = Class.create({
@@ -69,7 +70,6 @@
             var url = this.rootUrl;
 
             httpRequester.getJSON(url, function (data) {
-                clearUserData();
                 success(data);
             }, error)
         }
