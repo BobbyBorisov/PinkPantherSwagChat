@@ -30,7 +30,7 @@
             '<div id="usersList">';
 
         for (var i = 0; i < allUsers.length; i++) {
-            html += '<p>' + allUsers[i].Username + '</p>';
+            html += '<a href=#><p>' + allUsers[i].Username + '</p></a>';
         }
             
         html += '</div>' +
@@ -48,8 +48,24 @@
         return html;
     }
 
+    function buildConversationWindow(messages, partnerUsername) {
+        var html = "";
+
+        for (var i = 0; i < messages.length; i++) {
+            html += '<p>' + messages[i].Date + '</p>';
+            html += '<p>' + messages[i].Content + '</p>';
+        }
+
+        html += '<div id="textForm">' +
+               '<input id="textInput" type="text" placeholder="type text here" />' +
+               '<input type="submit" id="sendButton", value="Send" />' +
+           '</div>' +
+       '</div>';
+    }
+
     return {
         buildLoginForm: buildLoginForm,
-        buildChatUI: buildChatUI
+        buildChatUI: buildChatUI,
+        buildConversationWindow: buildConversationWindow
     }
 })();

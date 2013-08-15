@@ -1,5 +1,6 @@
 ﻿var controllers = (function () {
     var rootUrl = "http://localhost:2761/api/";
+    var partnerName;
 
     var Controller = Class.create({
         init: function () {
@@ -78,14 +79,19 @@
             
         },
 
-        startConversation: function () {
+        startConversation: function (selector) {
             var conversation = {
-                FirstUser: { Username:"Azis"},
-                SecondUser: { Username:"Pepa"}
+                FirstUser: { Username: localStorage.getItem("Username")},
+                SecondUser: { Username: partnerName}
             }
 
+            console.log(conversation);
+
             this.persister.conversation.start(conversation, function (data) {
-                console.log(data);
+                var messages = data.Messages;
+
+                var chatHtml = ui.buildConversationWindow(messages, partnerName);
+                $(selector).html(chatHtml);
             });
         },
 
@@ -114,7 +120,7 @@
                     PasswordHash: $(selector + " #tb-register-password").val()
                 }
                 self.persister.users.register(user, function () {
-                    self.loadChatUI(selector);
+
                 }, function (err) {
                     wrapper.find("#error-messages").text(err.responseJSON.Message);
                 });
@@ -135,6 +141,16 @@
                 });
                 return false;
             });
+
+            // get partner name and start conversation
+            wrapper.on("click", "#usersList p", function () {
+                // get partner name
+                partnerName = this.innerText;
+                wrapper.find("#partnerName").html('Chatting with ' + partnerName);
+
+                // start new conversation
+                self.startConversation(selector);
+            });
         }
     });
 
@@ -147,10 +163,10 @@
 
 $(function () {
     var controller = controllers.get();
-    //controller.loadUI("#content");
+    controller.loadUI("#content");
     //controller.registerSingleUser();
     //controller.loginSingleUser();
-    controller.startConversation();
+    //controller.startConversation();
     //controller.getAllUsers();
 
 });
