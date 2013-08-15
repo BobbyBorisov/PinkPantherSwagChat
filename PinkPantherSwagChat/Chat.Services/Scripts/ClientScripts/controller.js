@@ -15,7 +15,9 @@
             this.pubnub = PUBNUB.init({
                 publish_key: 'pub-c-114ac428-67b8-490a-93d0-3a210895d407',
                 subscribe_key: 'sub-c-ecacb7d2-04c0-11e3-a005-02ee2ddab7fe'
-            })
+            });
+            this.subscribeNotificationOnUsers();
+            
         },
 
         loadUI: function () {
@@ -114,6 +116,17 @@
                 }
             });
         },
+        subscribeNotificationOnUsers: function (){
+            var self = this;
+
+            this.pubnub.subscribe({
+                channel: "New-Users",
+                callback: function (message) {
+                    console.log(message);
+                    self.loadChatUI();
+                }
+            });
+        },
 
         startConversation: function (success) {
             var self = this;
@@ -157,6 +170,8 @@
                 // scroll to bottom
                 var objDiv = document.getElementById("msgContent");
                 objDiv.scrollTop = objDiv.scrollHeight;
+
+                $("#textInput").focus();
             });
         },
 
@@ -190,7 +205,11 @@
                     }
 
                     self.persister.users.register(user, function () {
+                        self.pubnub.publish({
+                            channel: "New-Users",
+                            message: "new user registered"
 
+                        });
                     }, function (err) {
                         wrapper.find("#error-messages").text(err.responseJSON.Message);
                     });
@@ -275,8 +294,6 @@
                 });
 
                 $("#textInput").val("");
-                $("#textInput").focus();
-                //console.log(currentConversation);
             });
 
             wrapper.on("click", "#logoutButton", function () {
