@@ -8,16 +8,16 @@
 
         loadUI: function (selector) {
              //Uncomment when persisters are working
-            //if (this.persister.isUserLoggedIn()) {
-            //    this.loadChatUI(selector);
-            //}
-            //else {
-            //    this.loadLoginFormUI(selector);
-            //}
+            if (this.persister.isUserLoggedIn()) {
+                this.loadChatUI(selector);
+            }
+            else {
+                this.loadLoginFormUI(selector);
+            }
 
             // debug
-            //this.loadChatUI(selector);
-            this.loadLoginFormUI(selector);
+            ////this.loadChatUI(selector);
+            //this.loadLoginFormUI(selector);
 
             this.attachUIEventHandlers(selector);
         },
