@@ -2,10 +2,13 @@
     var rootUrl = "http://localhost:2761/api/";
     var partnerName;
     var currentConversation;
+    var selector;
 
     var Controller = Class.create({
-        init: function () {
+        init: function (selector) {
+            this.selector = selector;
             this.persister = persisters.get(rootUrl);
+            this.initPubNub();
         },
 
         initPubNub: function () {
@@ -15,25 +18,25 @@
             })
         },
 
-        loadUI: function (selector) {
+        loadUI: function () {
              //Uncomment when persisters are working
             if (this.persister.isUserLoggedIn()) {
-                this.loadChatUI(selector);
+                this.loadChatUI(this.selector);
             }
             else {
-                this.loadLoginFormUI(selector);
+                this.loadLoginFormUI(this.selector);
             }
 
             // debug
             ////this.loadChatUI(selector);
             //this.loadLoginFormUI(selector);
 
-            this.attachUIEventHandlers(selector);
+            this.attachUIEventHandlers(this.selector);
         },
 
-        loadLoginFormUI: function (selector) {
+        loadLoginFormUI: function () {
             var loginFormHtml = ui.buildLoginForm();
-            $(selector).html(loginFormHtml);
+            $(this.selector).html(loginFormHtml);
         },
         registerSingleUser: function(){
             var user = {
@@ -57,17 +60,17 @@
 
         },
 
-        loadUsersList: function (selector, users) {
+        loadUsersList: function (users) {
             var chatUIHtml = ui.buildChatUI("someName", users);
-            $(selector).html(chatUIHtml);
+            $(this.selector).html(chatUIHtml);
         },
 
-        loadChatUI: function (selector) {
+        loadChatUI: function () {
             var self = this;
             
             this.persister.users.getAll(function (users) {
 
-                self.loadUsersList(selector, users);
+                self.loadUsersList(users);
 
             }, function (err) {
                 console.log(err);
@@ -100,26 +103,27 @@
         },
 
         createNotification: function (data) {
+            var self = this;
             var channelName = this.getChannelName();
 
             this.pubnub.subscribe({
                 channel: channelName,
                 callback: function (message) {
-                    // Received a message --> print it in the page
-                    //$("#msgContent").append("<p>"+message+ "</p>");
-                    //console.log(message);
-                    //updatemsg
+                    console.log(message);
+                    self.updateConversation("#content");
                 }
             });
         },
 
-        startConversation: function (selector) {
+        startConversation: function () {
+            var self = this;
             var conversation = {
                 FirstUser: { Username: localStorage.getItem("Username") },
                 SecondUser: { Username: partnerName }
             };
 
             console.log(conversation);
+            this.createNotification(conversation);
 
             this.persister.conversation.start(conversation, function (data) {
                 var messages = data.Messages;
@@ -128,16 +132,37 @@
                 console.log(chatHtml);
                 
                 // append new conversation
-                $(selector).append(chatHtml);
+                $(self.selector).append(chatHtml);
 
                 // save conversation
                 currentConversation = data;
             });
         },
 
-        attachUIEventHandlers: function (selector) {
-            var wrapper = $(selector);
+        updateConversation: function () {
             var self = this;
+
+            this.persister.message.getByConversation(currentConversation.Id, function (messages) {
+                var chatHtml = ui.buildConversationWindow(messages, partnerName);
+                console.log(chatHtml);
+                console.log(messages);
+                // append new conversation
+
+                //clear the previous
+                $(self.selector).find("#chatWindow").remove();
+
+                $(self.selector).append(chatHtml);
+
+                // scroll to bottom
+                var objDiv = document.getElementById("msgContent");
+                objDiv.scrollTop = objDiv.scrollHeight;
+            });
+        },
+
+        attachUIEventHandlers: function () {
+            
+            var self = this;
+            var wrapper = $(self.selector);
 
             // switch login and register forms
             wrapper.on("click", "#btn-show-login", function () {
@@ -156,8 +181,8 @@
             // register new user
             wrapper.on("click", "#btn-register", function () {
                 var user = {
-                    Username: $(selector).find("#tb-register-username").val(),
-                    PasswordHash: $(selector + " #tb-register-password").val()
+                    Username: $(self.selector).find("#tb-register-username").val(),
+                    PasswordHash: $(self.selector + " #tb-register-password").val()
                 }
                 self.persister.users.register(user, function () {
 
@@ -170,12 +195,12 @@
             // login existing user
             wrapper.on("click", "#btn-login", function () {
                 var user = {
-                    Username: $(selector + " #tb-login-username").val(),
-                    PasswordHash: $(selector + " #tb-login-password").val()
+                    Username: $(self.selector + " #tb-login-username").val(),
+                    PasswordHash: $(self.selector + " #tb-login-password").val()
                 }
 
                 self.persister.users.login(user, function () {
-                    self.loadChatUI(selector);
+                    self.loadChatUI();
                 }, function (err) {
                     wrapper.find("#error-messages").text(err.responseJSON.Message);
                 });
@@ -192,11 +217,11 @@
                 $("#chatWindow").remove();
 
                 // start new conversation
-                self.startConversation(selector);
+                self.startConversation();
             });
 
             // send new message
-            wrapper.on("click", "#sendButton", function () {
+            wrapper.on("click", "#sendButton", function (e) {
                 var message = {};
                 message.Date = new Date();
                 message.Content = $("#textInput").val();
@@ -209,22 +234,18 @@
                 message.Sender = user;
 
                 self.persister.message.send(message, function () {
-                    self.persister.message.getByConversation(currentConversation.Id, function(messages) {
-                        var chatHtml = ui.buildConversationWindow(messages, partnerName);
-                        console.log(chatHtml);
-                        console.log(messages);
-                        // append new conversation
-                        
-                        //clear the previous
-                        $(selector).find("#chatWindow").remove();
-
-                        $(selector).append(chatHtml);
-
-                        // scroll to bottom
-                        var objDiv = document.getElementById("msgContent");
-                        objDiv.scrollTop = objDiv.scrollHeight;
-                    });
+                    self.updateConversation();
                 });
+
+                var channelName = self.getChannelName();
+                e.preventDefault();
+                self.pubnub.publish({
+                    channel: channelName,
+                    message: $("#textInput").val()
+
+                });
+
+                $("#textInput").val("");
                 //console.log(currentConversation);
             });
 
@@ -236,15 +257,15 @@
     });
 
     return {
-        get: function () {
-            return new Controller();
+        get: function (selector) {
+            return new Controller(selector);
         }
     }
 })();
 
 $(function () {
-    var controller = controllers.get();
-    controller.loadUI("#content");
+    var controller = controllers.get("#content");
+    controller.loadUI();
     //controller.registerSingleUser();
     //controller.loginSingleUser();
     //controller.startConversation();
