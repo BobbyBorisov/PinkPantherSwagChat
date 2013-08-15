@@ -7,21 +7,22 @@
 						'<label for="tb-login-username">Username: </label>' +
 						'<input type="text" id="tb-login-username"><br />' +
 						'<label for="tb-login-password">Password: </label>' +
-						'<input type="text" id="tb-login-password"><br />' +
+						'<input type="password" id="tb-login-password"><br />' +
 						'<button id="btn-login" class="button">Login</button>' +
 					'</div>' +
 					'<div id="register-form" style="display: none">' +
 						'<label for="tb-register-username">Username: </label>' +
 						'<input type="text" id="tb-register-username"><br />' +
 						'<label for="tb-register-password">Password: </label>' +
-						'<input type="text" id="tb-register-password"><br />' +
+						'<input type="password" id="tb-register-password"><br />' +
 						'<button id="btn-register" class="button">Register</button>' +
 					'</div>' +
-					'<a href="#" id="btn-show-login" class="button selected">Login</a>' +
+					'<a href="#" id="btn-show-login" class="button selected">Login</a> ' +
 					'<a href="#" id="btn-show-register" class="button">Register</a>' +
 				'</form>' +
 				'<div id="error-messages"></div>' +
-            '</div>';
+            '</div>' +
+            '<div id="error-messages"></div>';
         return html;
     }
 
@@ -45,18 +46,29 @@
     function buildConversationWindow(messages, partnerUsername) {
         var html = '<div id="chatWindow">' +
         '<div id="textForm">' +
-                '<div id="msgContent">' +
+                '<div id="msgContent">';
 
-        console.log(messages);
 
         for (var i = 0; i < messages.length; i++) {
-            html += '<p>' + messages[i].Date + '</p>';
-            html += '<p>' + messages[i].Content + '</p>';
+            var username = messages[i].Sender.Username;
+            if (username == partnerUsername) {
+                html += '<p class="recieved">' + partnerUsername + '</p>';
+            }
+            else {
+                html += '<p class="sent">' + username + '</p>';
+            }
+
+            html += '<p class="msgDate">' + messages[i].Date + '</p>';
+            html += '<p class="chatMessage">' + messages[i].Content + '</p>';
         }
 
         html += '</div>' +
+                '<div id="send-text-form-holder">' +
+                '<form>' +
                '<input id="textInput" type="text" placeholder="type text here" />' +
                '<input type="submit" id="sendButton", value="Send" />' +
+               '</form>' +
+               '</div>' +
            '</div>' +
        '</div>';
 

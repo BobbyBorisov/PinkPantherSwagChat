@@ -2,13 +2,41 @@
     margin: 0;
     padding: 0;
 }
+body {
+    color: white;
+    text-shadow: 1px 1px 2px rgba(150, 150, 150, 1);
 
+}
+
+a:link {text-decoration:none;}
+a:visited {text-decoration:none;}
+a:hover {text-decoration:underline;}
+a:active {text-decoration:underline;}
+
+a, .sent, .recieved {
+     color: #096c82;
+}
 #wrapper {
     width: 600px;
     margin: 0 auto;
     overflow: auto;
-    background-color: #abdcd6;
+    background-color: #a7d5d0;
+
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    border: 1px solid #808080;
+
+    -webkit-box-shadow: 0px 0px 30px rgba(50, 50, 50, 0.67);
+    -moz-box-shadow:    0px 0px 30px rgba(50, 50, 50, 0.67);
+    box-shadow:         0px 0px 30px rgba(50, 50, 50, 0.67);
+    padding: 25px;
 }
+
+h1 {
+    
+}
+
 
 #usersList {
     margin-right: 30px;
@@ -26,6 +54,15 @@
 
     min-height: 500px;
     height:auto;
+
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+
+-webkit-box-shadow: inset 0px 0px 15px 1px rgba(30, 30, 30, 0.3);
+box-shadow: inset 0px 0px 15px 1px rgba(30, 30, 30, 0.3);
+
+    background-color: #abdcd6;
 }
 
 #clearFix {
@@ -40,16 +77,38 @@
     background-color: #b6ff00;
 }
 
+.sent, .recieved {
+    padding-left: 10px;
+}
+
+.msgDate {
+    font-size: 11px;
+    color: #494949;
+}
+
+
 #textForm {
     margin-top: 15px;
 }
 
+#send-text-form-holder {
+    background-color: #a6cbc6;
+}
+
 #msgContent {
     height: 500px;
-    overflow:scroll;
+    overflow-y:scroll;
+    overflow-x:none;
 }
 
 #profilePanel {
     float: right;
 }
+
+#error-messages {
+    color: #e12c2c;
+}
+
+
+
 
