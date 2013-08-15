@@ -87,7 +87,7 @@
             
         },
 
-        createNotification: function (data) {
+        getChannelName: function () {
             var channelName = "";
             var firstUser = localStorage.getItem("Username");
             if (firstUser < partnerName) {
@@ -95,6 +95,12 @@
             } else {
                 channelName = partnerName + "-" + firstUser + "-channel";
             }
+
+            return channelName;
+        },
+
+        createNotification: function (data) {
+            var channelName = this.getChannelName();
 
             this.pubnub.subscribe({
                 channel: channelName,
