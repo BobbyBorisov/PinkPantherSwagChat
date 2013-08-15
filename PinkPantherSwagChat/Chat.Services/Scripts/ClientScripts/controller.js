@@ -246,6 +246,7 @@
                 });
 
                 $("#textInput").val("");
+                $("#textInput").focus();
                 //console.log(currentConversation);
             });
 
