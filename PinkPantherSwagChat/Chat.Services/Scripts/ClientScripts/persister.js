@@ -107,13 +107,17 @@
         send: function (message, success, error) {
 
             var messageInfo = {
-                sender: message.sender,
-                receiver: message.receiver,
-                content: message.content
+                Sender: message.Sender,
+                Conversation: message.Conversation,
+                Date: message.Date,
+                Content: message.Content
             };
 
             var url = this.rootUrl + "send/";
-            httpRequester.getJSON(url, success, error);
+            httpRequester.postJSON(url, messageInfo,
+				function (data) {
+				    success(data);
+				}, error);
         }
     });
     return {
