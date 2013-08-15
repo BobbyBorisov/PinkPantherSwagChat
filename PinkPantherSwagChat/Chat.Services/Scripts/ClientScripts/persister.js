@@ -28,6 +28,7 @@
         },
         isUserLoggedIn: function () {
             var isLoggedIn = username != null && sessionKey != null;
+            console.log(isLoggedIn);
             return isLoggedIn;
         },
         username: function () {
@@ -61,7 +62,7 @@
             };
             httpRequester.postJSON(url, userData,
 				function (data) {
-				    saveUserData(data);
+				    //saveUserData(data);
 				    success(data);
 				}, error);  
         },

@@ -124,7 +124,7 @@
                 channel: "New-Users",
                 callback: function (message) {
                     console.log(message);
-                    self.loadChatUI();
+                    //self.loadChatUI();
                 }
             });
         },
@@ -211,7 +211,9 @@
             });
 
             // register new user
-            wrapper.on("click", "#btn-register", function () {
+            wrapper.on("click", "#btn-register", function (ev) {
+                ev.preventDefault();
+                
                 // upload profile picture
                 ImageUploader.uploadImage("file-upload", function (url) {
                     var user = {
@@ -226,8 +228,8 @@
                             message: "new user registered"
 
                         });
-
-                        window.location.reload();
+                        self.loadUI();
+                        //window.location.reload();
                         //localStorage.clear();
                     }, function (err) {
                         wrapper.find("#error-messages").text(err.responseJSON.Message);
