@@ -48,6 +48,7 @@
         }
 
         html += '<div id="textForm">' +
+                '<div id="msgContent"></div>'+
                '<input id="textInput" type="text" placeholder="type text here" />' +
                '<input type="submit" id="sendButton", value="Send" />' +
            '</div>' +
