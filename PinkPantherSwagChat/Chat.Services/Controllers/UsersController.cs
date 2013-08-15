@@ -47,7 +47,7 @@ namespace Chat.Services.Controllers
             bool validUser = usersRepository.CheckLogin(value.Username, value.PasswordHash);
             if (validUser)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, value.PasswordHash);
+                return Request.CreateResponse(HttpStatusCode.OK, value);
             }
             else
             {
