@@ -171,8 +171,9 @@
                 message.Date = new Date();
                 message.Content = $("#textInput").val();
                 message.Conversation = currentConversation;
+                console.log(currentConversation);
 
-                var user = {}
+                var user = { };
                 user.Id = localStorage.getItem("UserId");
 
                 message.Sender = user;
