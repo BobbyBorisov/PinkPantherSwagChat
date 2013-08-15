@@ -8,6 +8,13 @@
             this.persister = persisters.get(rootUrl);
         },
 
+        initPubNub: function () {
+            this.pubnub = PUBNUB.init({
+                publish_key: 'pub-c-114ac428-67b8-490a-93d0-3a210895d407',
+                subscribe_key: 'sub-c-ecacb7d2-04c0-11e3-a005-02ee2ddab7fe'
+            })
+        },
+
         loadUI: function (selector) {
              //Uncomment when persisters are working
             if (this.persister.isUserLoggedIn()) {
@@ -81,7 +88,23 @@
         },
 
         createNotification: function (data) {
+            var channelName = "";
+            var firstUser = localStorage.getItem("Username");
+            if (firstUser < partnerName) {
+                channelName = firstUser + "-" + partnerName + "-channel";
+            } else {
+                channelName = partnerName + "-" + firstUser + "-channel";
+            }
 
+            this.pubnub.subscribe({
+                channel: channelName,
+                callback: function (message) {
+                    // Received a message --> print it in the page
+                    //$("#msgContent").append("<p>"+message+ "</p>");
+                    //console.log(message);
+                    //updatemsg
+                }
+            });
         },
 
         startConversation: function (selector) {
