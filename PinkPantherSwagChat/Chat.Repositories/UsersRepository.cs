@@ -18,14 +18,10 @@ namespace Chat.Repositories
             this.chatContext = context;
         }
 
-        public bool CheckLogin(string username, string passwordHash)
+        public User CheckLogin(string username, string passwordHash)
         {
-            if(chatContext.Users.Any(u => u.Username == username && u.PasswordHash == passwordHash))
-            {
-                return true;
-            }
-
-            return false;
+            var user = chatContext.Users.FirstOrDefault(u => u.Username == username && u.PasswordHash == passwordHash);
+            return user;
         }
 
         public User GetByUsername(string username)

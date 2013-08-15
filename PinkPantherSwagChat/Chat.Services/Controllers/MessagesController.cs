@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -12,12 +13,12 @@ namespace Chat.Services.Controllers
 {
     public class MessagesController : ApiController
     {
-        private IRepository<Message> messagesRepository;
+        private MessagesRepository messagesRepository;
 
         public MessagesController()
         {
             var context = new ChatDatabaseContext();
-            messagesRepository = new EfRepository<Message>(context);
+            messagesRepository = new MessagesRepository(context);
         }
 
         [HttpGet]
@@ -36,6 +37,7 @@ namespace Chat.Services.Controllers
         [ActionName("send")]
         public void Post([FromBody]Message value)
         {
+            value.Conversation.Messages = new Collection<Message>();
             messagesRepository.Add(value);
         }
     }

@@ -4,12 +4,15 @@
     function saveUserData(userData) {
         localStorage.setItem("Username", userData.Username);
         localStorage.setItem("PasswordHash", userData.PasswordHash);
-        
+        localStorage.setItem("UserId", userData.Id);
+
         console.log(localStorage);
     }
     function clearUserData() {
         localStorage.removeItem("Username");
         localStorage.removeItem("PasswordHash");
+        localStorage.removeItem("UserId", userData.Id);
+
         username = "";
         sessionKey = "";
     }

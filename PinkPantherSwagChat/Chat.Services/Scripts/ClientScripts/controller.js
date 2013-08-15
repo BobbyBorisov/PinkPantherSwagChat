@@ -1,20 +1,11 @@
 ﻿var controllers = (function () {
     var rootUrl = "http://localhost:2761/api/";
-    //var pubkey = "pub-c-114ac428-67b8-490a-93d0-3a210895d407";
-    //var subkey = "sub-c-ecacb7d2-04c0-11e3-a005-02ee2ddab7fe";
     var partnerName;
+    var currentConversation;
 
     var Controller = Class.create({
         init: function () {
             this.persister = persisters.get(rootUrl);
-            this.initPubNub();
-        },
-
-        initPubNub: function(){
-            this.pubnub = PUBNUB.init({
-                publish_key: 'pub-c-114ac428-67b8-490a-93d0-3a210895d407',
-                subscribe_key: 'sub-c-ecacb7d2-04c0-11e3-a005-02ee2ddab7fe'
-            })
         },
 
         loadUI: function (selector) {
@@ -91,51 +82,27 @@
 
         createNotification: function (data) {
 
-            var channelName = "";
-            var firstUser = localStorage.getItem("Username");
-            if (firstUser < partnerName) {
-                channelName = firstUser + "-" + partnerName + "-channel";
-            } else {
-                channelName = partnerName + "-" + firstUser + "-channel";
-            }
-
-            this.pubnub.subscribe({
-                channel: channelName,
-                callback: function (message) {
-                    // Received a message --> print it in the page
-                    //$("#msgContent").append("<p>"+message+ "</p>");
-                    //console.log(message);
-                    //updatemsg
-                }
-            });
-
-            
-
         },
 
         startConversation: function (selector) {
-            var self = this;
-
             var conversation = {
-                FirstUser: { Username: localStorage.getItem("Username")},
-                SecondUser: { Username: partnerName}
-            }
+                FirstUser: { Username: localStorage.getItem("Username") },
+                SecondUser: { Username: partnerName }
+            };
 
-            this.createNotification(conversation);
             console.log(conversation);
-
-            
-
 
             this.persister.conversation.start(conversation, function (data) {
                 var messages = data.Messages;
-                
 
                 var chatHtml = ui.buildConversationWindow(messages, partnerName);
                 console.log(chatHtml);
                 
                 // append new conversation
                 $(selector).append(chatHtml);
+
+                // save conversation
+                currentConversation = data;
             });
         },
 
@@ -199,23 +166,22 @@
                 self.startConversation(selector);
             });
 
-            wrapper.on("click", "#sendButton", function (e) {
-                var channelName = "";
-                var firstUser = localStorage.getItem("Username");
-                if (firstUser < partnerName) {
-                    channelName = firstUser + "-" +partnerName + "-channel";
-                } else {
-                    channelName = partnerName + "-" + firstUser + "-channel";
-                }
-                e.preventDefault();
-                self.pubnub.publish({
-                    channel: channelName,
-                    message: $("#textInput").val()
+            wrapper.on("click", "#sendButton", function () {
+                var message = {};
+                message.Date = new Date();
+                message.Content = $("#textInput").val();
+                message.Conversation = currentConversation;
+                console.log(currentConversation);
 
+                var user = { };
+                user.Id = localStorage.getItem("UserId");
+
+                message.Sender = user;
+
+                self.persister.message.send(message, function () {
+                    console.log("Sent!");
                 });
-
-                $("#textInput").val("");
-
+                //console.log(currentConversation);
             });
         }
     });

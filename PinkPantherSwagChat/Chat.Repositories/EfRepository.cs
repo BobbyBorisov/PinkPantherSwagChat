@@ -33,7 +33,7 @@ namespace Chat.Repositories
             return this.DbSet.Find(id);
         }
 
-        public void Add(T item)
+        public virtual void Add(T item)
         {
             DbEntityEntry entry = this.Context.Entry(item);
             if (entry.State != EntityState.Detached)

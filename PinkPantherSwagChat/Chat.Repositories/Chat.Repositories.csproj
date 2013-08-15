@@ -47,6 +47,7 @@
     <Compile Include="ConversationsRepository.cs" />
     <Compile Include="EfRepository.cs" />
     <Compile Include="IRepository.cs" />
+    <Compile Include="MessagesRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UsersRepository.cs" />
   </ItemGroup>
