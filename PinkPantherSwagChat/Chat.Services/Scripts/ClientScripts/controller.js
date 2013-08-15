@@ -228,7 +228,7 @@
                         });
 
                         window.location.reload();
-                        //localStorage.clear();
+                        localStorage.clear();
                     }, function (err) {
                         wrapper.find("#error-messages").text(err.responseJSON.Message);
                     });
