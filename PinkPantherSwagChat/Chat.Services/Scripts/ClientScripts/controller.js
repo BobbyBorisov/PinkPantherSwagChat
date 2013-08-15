@@ -208,7 +208,21 @@
                 message.Sender = user;
 
                 self.persister.message.send(message, function () {
-                    console.log("Sent!");
+                    self.persister.message.getByConversation(currentConversation.Id, function(messages) {
+                        var chatHtml = ui.buildConversationWindow(messages, partnerName);
+                        console.log(chatHtml);
+                        console.log(messages);
+                        // append new conversation
+                        
+                        //clear the previous
+                        $(selector).find("#chatWindow").remove();
+
+                        $(selector).append(chatHtml);
+
+                        // scroll to bottom
+                        var objDiv = document.getElementById("msgContent");
+                        objDiv.scrollTop = objDiv.scrollHeight;
+                    });
                 });
                 //console.log(currentConversation);
             });

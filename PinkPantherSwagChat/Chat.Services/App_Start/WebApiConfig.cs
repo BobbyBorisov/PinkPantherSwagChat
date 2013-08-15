@@ -17,8 +17,8 @@ namespace Chat.Services
 
             config.Routes.MapHttpRoute(
                    name: "MessagesApi",
-                   routeTemplate: "api/messages/{action}",
-                   defaults: new { controller = "messages" }
+                   routeTemplate: "api/messages/{action}/{id}",
+                   defaults: new { controller = "messages", id = RouteParameter.Optional }
                );
 
             config.Routes.MapHttpRoute(
