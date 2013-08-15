@@ -1,16 +1,18 @@
-﻿@{
-    Layout = null;
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Uh oh, an error occurred!";
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Error</title>
-</head>
-<body>
-    <h2>
-        Sorry, an error occurred while processing your request.
-    </h2>
-</body>
-</html>
+<h2>One of us broke the site.</h2>
+
+@if (Model != null)
+{
+    <h3>@Model.Exception.GetType().Name</h3>
+    <pre>
+        @Model.Exception.ToString()
+    </pre>
+    <p>
+        thrown in @Model.ControllerName @Model.ActionName
+    </p>
+}
