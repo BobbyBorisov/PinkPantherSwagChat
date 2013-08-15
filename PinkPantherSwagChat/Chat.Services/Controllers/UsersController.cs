@@ -44,10 +44,10 @@ namespace Chat.Services.Controllers
         [ActionName("login")]
         public HttpResponseMessage Login([FromBody]User value)
         {
-            bool validUser = usersRepository.CheckLogin(value.Username, value.PasswordHash);
-            if (validUser)
+            var user = usersRepository.CheckLogin(value.Username, value.PasswordHash);
+            if (user != null)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, value);
+                return Request.CreateResponse(HttpStatusCode.OK, user);
             }
             else
             {
