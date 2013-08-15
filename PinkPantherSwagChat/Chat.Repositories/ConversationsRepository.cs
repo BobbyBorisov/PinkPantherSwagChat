@@ -26,6 +26,11 @@ namespace Chat.Repositories
                     ||
                     (c.FirstUser.Username == secondUsername && c.SecondUser.Username == firstUsername));
 
+            if(conversation == null)
+            {
+                return null;
+            }
+
             var newConversation = new Conversation()
             {
                 Id = conversation.Id,
