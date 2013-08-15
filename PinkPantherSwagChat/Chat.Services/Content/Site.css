@@ -6,7 +6,7 @@
 #wrapper {
     width: 600px;
     margin: 0 auto;
-
+    overflow: auto;
     background-color: #abdcd6;
 }
 
@@ -23,6 +23,9 @@
     float: left;
     border: 1px solid #494949;
     padding: 10px;
+
+    min-height: 500px;
+    height:auto;
 }
 
 #clearFix {
@@ -39,5 +42,10 @@
 
 #textForm {
     margin-top: 15px;
+}
+
+#msgContent {
+    height: 500px;
+    overflow:scroll;
 }
 

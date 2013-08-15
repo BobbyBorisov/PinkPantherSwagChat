@@ -40,7 +40,9 @@
     }
 
     function buildConversationWindow(messages, partnerUsername) {
-        var html = '<div id="chatWindow">';
+        var html = '<div id="chatWindow">' +
+        '<div id="textForm">' +
+                '<div id="msgContent">' +
 
         console.log(messages);
 
@@ -49,8 +51,7 @@
             html += '<p>' + messages[i].Content + '</p>';
         }
 
-        html += '<div id="textForm">' +
-                '<div id="msgContent"></div>'+
+        html += '</div>' +
                '<input id="textInput" type="text" placeholder="type text here" />' +
                '<input type="submit" id="sendButton", value="Send" />' +
            '</div>' +
