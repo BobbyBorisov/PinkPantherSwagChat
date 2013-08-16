@@ -35,9 +35,23 @@ namespace Chat.Services.Controllers
 
         [HttpPost]
         [ActionName("register")]
-        public void Register([FromBody]User value)
+        public HttpResponseMessage Register([FromBody]User value)
         {
+            if(string.IsNullOrEmpty(value.Username) || string.IsNullOrWhiteSpace(value.Username)
+                || value.Username.Length < 5 || value.Username.Length > 30)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest,
+                                              "Invalid username. Should be between 5 and 30 characters");
+            }
+
+            if(usersRepository.GetByUsername(value.Username) != null)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest,
+                                              "Username already exists");
+            }
+
             usersRepository.Add(value);
+            return Request.CreateResponse(HttpStatusCode.Created);
         }
 
         [HttpPost]
