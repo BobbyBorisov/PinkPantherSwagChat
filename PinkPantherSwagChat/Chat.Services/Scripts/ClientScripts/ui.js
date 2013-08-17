@@ -29,6 +29,7 @@
 
     function buildChatUI(partnerName, allUsers) {
         var partnerPictureUrl = "";
+        partnerName = partnerName.escape();
 
         var html =
             '<div id="profilePanel">' +
@@ -50,13 +51,15 @@
     }
 
     function buildConversationWindow(messages, partnerUsername) {
+        partnerUsername = partnerUsername.escape();
+
         var html = '<div id="chatWindow">' +
         '<div id="textForm">' +
                 '<div id="msgContent">';
 
 
         for (var i = 0; i < messages.length; i++) {
-            var username = messages[i].Sender.Username;
+            var username = messages[i].Sender.Username.escape();
             if (username == partnerUsername) {
                 html += '<p class="recieved">' + partnerUsername + '</p>';
             }

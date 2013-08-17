@@ -201,7 +201,7 @@
             // login existing user
             wrapper.on("click", "#btn-login", function () {
                 var user = {
-                    Username: $(self.selector + " #tb-login-username").val(),
+                    Username: $(self.selector + " #tb-login-username").val().escape(),
                     PasswordHash: $(self.selector + " #tb-login-password").val()
                 }
 
