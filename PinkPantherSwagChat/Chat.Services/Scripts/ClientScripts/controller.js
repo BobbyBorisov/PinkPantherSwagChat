@@ -41,33 +41,10 @@
             var loginFormHtml = ui.buildLoginForm();
             $(this.selector).html(loginFormHtml);
         },
-        registerSingleUser: function(){
-            var user = {
-                Username: "Pepa",
-                PasswordHash: "pepa"
-            }
-
-            this.persister.users.register(user,function () {
-                console.log("Success");
-            });
-        },
-        loginSingleUser: function () {
-            var user = {
-                Username: "Pepa",
-                PasswordHash: "pepa"
-            }
-
-            this.persister.users.login(user, function () {
-                console.log("Success login");
-            });
-
-        },
-
         loadUsersList: function (users) {
             var chatUIHtml = ui.buildChatUI("someName", users);
             $(this.selector).html(chatUIHtml);
         },
-
         loadChatUI: function () {
             var self = this;
             
@@ -78,21 +55,7 @@
             }, function (err) {
                 console.log(err);
             });
-        }
-        ,
-        getAllUsers: function () {
-            this.persister.users.getAll(function (users)
-            {
-                for (var i = 0; i<users.length; i += 1)
-                {
-                    //$(document).append(users[i].Username);
-                    console.log(users[i].Username);
-                }
-                
-            });
-            
         },
-
         getChannelName: function () {
             var channelName = "";
             var firstUser = localStorage.getItem("Username");
@@ -112,9 +75,7 @@
             this.pubnub.subscribe({
                 channel: channelName,
                 callback: function (message) {
-                    console.log(message);
                     self.updateConversation("#content");
-                    //not
                 }
             });
         },
@@ -135,12 +96,12 @@
             var self = this;
             var username = localStorage.getItem("Username");
 
-            console.log(username);
+            
 
             this.pubnub.subscribe({
                 channel: username + "-channel",
                 callback: function (message) {
-                    console.log(message);
+                    
                     $("#" + message).css("background-color", "yellow");
                 }
             });
@@ -153,7 +114,6 @@
                 SecondUser: { Username: partnerName }
             };
 
-            console.log(conversation);
             this.createNotification(conversation);
 
             this.persister.conversation.start(conversation, function (data) {
@@ -177,7 +137,6 @@
             this.persister.message.getByConversation(currentConversation.Id, function (messages) {
                 var chatHtml = ui.buildConversationWindow(messages, partnerName);
                 console.log(chatHtml);
-                console.log(messages);
                 // append new conversation
 
                 //clear the previous
@@ -219,7 +178,7 @@
                 // upload profile picture
                 ImageUploader.uploadImage("file-upload", function (url) {
                     var user = {
-                        Username: $(self.selector).find("#tb-register-username").val(),
+                        Username: $(self.selector).find("#tb-register-username").val().escape(),
                         PasswordHash: $(self.selector + " #tb-register-password").val(),
                         ProfilePictureUrl: url
                     }
@@ -231,10 +190,8 @@
 
                         });
                         self.loadUI();
-                        //window.location.reload();
-                        //localStorage.clear();
                     }, function (err) {
-                        wrapper.find("#error-messages").text(err.responseJSON.Message);
+                        wrapper.find("#error-messages").text(err.responseText);
                     });
                     return false;
                 });
@@ -253,7 +210,7 @@
                     self.subsribeOwnChannelForNotification();
 
                 }, function (err) {
-                    wrapper.find("#error-messages").text(err.responseJSON.Message);
+                    wrapper.find("#error-messages").text(err.responseText);
                 });
                 return false;
             });
@@ -270,7 +227,7 @@
 
                 // start new conversation
                 self.startConversation(function () {
-                    console.log(currentConversation);
+                   
                     var partner = (currentConversation.FirstUser.Username == partnerName) ? currentConversation.FirstUser : currentConversation.SecondUser
                     var partnerPictureUrl = partner.ProfilePictureUrl;
                     
@@ -282,7 +239,7 @@
                     }
 
                     var currentUserPictureUrl = localStorage.getItem("ProfilePictureUrl");
-                    console.log(currentUserPictureUrl);
+                    
                     if (currentUserPictureUrl != null) {
                         $("#yourPicture").attr("src", currentUserPictureUrl);
                     }
@@ -304,7 +261,7 @@
                 message.Date = new Date();
                 message.Content = $("#textInput").val();
                 message.Conversation = currentConversation;
-                console.log(currentConversation);
+               
 
                 var user = { };
                 user.Id = localStorage.getItem("UserId");
@@ -349,9 +306,4 @@
 $(function () {
     var controller = controllers.get("#content");
     controller.loadUI();
-    //controller.registerSingleUser();
-    //controller.loginSingleUser();
-    //controller.startConversation();
-    //controller.getAllUsers();
-
 });

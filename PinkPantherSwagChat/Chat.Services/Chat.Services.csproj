@@ -191,6 +191,7 @@
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\ClientScripts\class.js" />
     <Content Include="Scripts\ClientScripts\controller.js" />
+    <Content Include="Scripts\ClientScripts\extensions.js" />
     <Content Include="Scripts\ClientScripts\http-requester.js" />
     <Content Include="Scripts\ClientScripts\image-uploader.js" />
     <Content Include="Scripts\ClientScripts\persister.js" />

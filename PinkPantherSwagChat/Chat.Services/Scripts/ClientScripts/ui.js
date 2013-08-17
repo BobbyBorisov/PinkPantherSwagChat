@@ -23,8 +23,7 @@
 					'<a href="#" id="btn-show-register" class="button">Register</a>' +
 				'</form>' +
 				'<div id="error-messages"></div>' +
-            '</div>' +
-            '<div id="error-messages"></div>';
+            '</div>';
         return html;
     }
 
