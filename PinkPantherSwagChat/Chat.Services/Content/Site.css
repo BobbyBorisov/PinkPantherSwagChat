@@ -43,6 +43,8 @@ h1 {
     width: 80px;
     overflow: scroll;
     clear: right;
+    max-height: 540px;
+    padding: 4px;
 }
 
 #chatWindow {
